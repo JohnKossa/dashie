@@ -1,4 +1,4 @@
-# bottlebox
+# dashie
 A very minimalistic but easy to use web framework for node.js.
  
 What do we mean by minimalistic? People do tend to toss around that term lightly.
@@ -9,16 +9,16 @@ Simply put, this framework aims to have as few dependencies on external modules 
 
 After all, the more time your framework spends working on its own stuff, the less time it spends working on yours.
 
-Bottlebox features decorators to create a Flask-like interface for your application. Decorators are used to routes on the server as well as to attach middleware routines only to the endpoints that require them such as loading database connections, gzipping, or pre-preparing your response headers.
+Dashie features decorators to create a Flask-like interface for your application. Decorators are used to routes on the server as well as to attach middleware routines only to the endpoints that require them such as loading database connections, gzipping, or pre-preparing your response headers.
 
 After all, being minimalistic is no excuse for being difficult to use.
 
 
 ## Installation
 
-Bottlebox requires node v7.0.0 or higher and async function support.
+Dashie requires node v7.0.0 or higher and async function support.
 
-Bottlebox currently only functions through the use of TypeScript compilation steps, but we plan to remove that dependency the second decorators are officially added to the ECMA spec.
+Dashie currently only functions through the use of TypeScript compilation steps, but we plan to remove that dependency the second decorators are officially added to the ECMA spec.
 
 ```
 No installation available yet. Stay tuned for details!
