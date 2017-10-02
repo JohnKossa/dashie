@@ -1,7 +1,7 @@
 const http        = require('http');
 const querystring = require('querystring');
 
-class MyServer{
+class DashieServer{
     private httpServer = null;
     public myRoutes = [];
 
@@ -103,4 +103,4 @@ class MyServer{
         this.httpServer.listen(port);
     }
 }
-export {MyServer};
+export {DashieServer};

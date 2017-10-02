@@ -1,18 +1,25 @@
 {
-  "name": "bottlebox",
+  "name": "dashie",
   "version": "0.0.1",
   "description": "A minimalist web server",
-  "main": "sampleApp.js",
+  "main": "build/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node build/sampleApp.js",
+    "build:compile": "./node_modules/.bin/tsc",
+    "build:prepSample": "npm run build:compile && cp -R sampleApp/static build/sampleApp/",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JohnKossa/bottlebox.git"
+    "url": "git+https://github.com/JohnKossa/dashie.git"
   },
   "author": "John Kossa",
   "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^8.0.31",
+    "ts-node": "^3.3.0",
+    "typescript": "^2.5.2"
+  },
   "dependencies": {
     "fs": "0.0.1-security",
     "path": "^0.12.7",

@@ -1,5 +1,9 @@
-class DBHandler{
-    private dbConnections = {
+class ContextProvider{
+    private type = "ctx";
+    constructor(type){
+        this.type = type
+    }
+    private contexts = {
         "default": null
     };
 
@@ -8,15 +12,15 @@ class DBHandler{
         return (target: any, key: string, descriptor: TypedPropertyDescriptor<any>)=>{
             return {
                 value: (...args: any[])=>{
-                    args[0].db = this.dbConnections[myConnection || "default"];
+                    args[0][this.type] = this.contexts[myConnection || "default"];
                     return descriptor.value.apply(this, args);
                 }
             }
         }
     }
 
-    public registerDB(dbInstance:any, dbName?: string): void{
-        this.dbConnections[dbName || "default"] = dbInstance;
+    public register(dbInstance:any, dbName?: string): void{
+        this.contexts[dbName || "default"] = dbInstance;
     }
 }
-export {DBHandler};
+export {ContextProvider};

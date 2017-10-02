@@ -1,11 +1,10 @@
-const fs              = require('fs');
-const path            = require('path');
-const url             = require('url');
-const {promisify}     = require('util');
+const fs                 = require('fs');
+const path               = require('path');
+const url                = require('url');
+const {promisify}        = require('util');
 
-const {MyServer}      = require("../server/server");
-const {RedisHandler}  = require("../server/redisHandler");
-const {DBHandler}     = require("../server/dbHandler");
+const {MyServer}         = require("../server/server");
+const {ContextProvider}  = require("../server/contextProvider");
 
 const configs = {
     dbhost: process.env.DB_HOST,
@@ -15,8 +14,8 @@ const configs = {
 };
 
 let server = new MyServer(); //instantiate server
-let dbHandler = new DBHandler(); //instantiate db connector
-let redisHandler = new RedisHandler(); //instantiate redis connector
+let dbHandler = new ContextProvider("db"); //instantiate db connector
+let redisHandler = new ContextProvider("redis"); //instantiate redis connector
 
 class sampleApp {
     constructor() {}
@@ -51,7 +50,6 @@ class sampleApp {
 
     @server.addRoute("GET", "/time_series2")
     static async getTimeSeries2(env, req, res){
-        //TODO Does this count as cheating?
         const parsedQuery = url.parse(req.url, true).query;
         const count = parsedQuery["count"];
         const immediatePromise = promisify(setImmediate);
