@@ -26,8 +26,8 @@ No installation available yet. Stay tuned for details!
 ## Hello World
 
 ```js
-const {MyServer} = require("../server/server");
-let server = new MyServer();
+const {DashieServer} = require("../server/server");
+let server = new DashieServer();
 class HelloWorldApp{
     @server.addRoute("GET", "/hello_world")
     static async helloWorld(env, req, res){
@@ -45,8 +45,8 @@ server.listen(1337);
 ### Dynamic Routing
 
 ```js
-const {MyServer} = require("../server/server");
-let server = new MyServer();
+const {DashieServer} = require("../server/server");
+let server = new DashieServer();
 
 class HelloSomeoneApp{
     @server.addRoute("GET", "/hello_:target")
@@ -63,8 +63,8 @@ server.listen(1337);
 ### Post Body Parsing
 
 ```js
-const {MyServer} = require("../server/server");
-let server = new MyServer();
+const {DashieServer} = require("../server/server");
+let server = new DashieServer();
 
 class LoginApp{
     @server.addRoute("POST", "/login")
@@ -89,11 +89,11 @@ server.listen(1337);
 #### Named Contexts
 
 ```js
-const {MyServer}  = require("../server/server");
-const {DBHandler} = require("./server/dbHandler");
-const knex        = require('knex');
-let server = new MyServer();
-let dbProvider = new DBHandler();
+const {ContextProvider}  = require("../server/contextProvider");
+const {DashieServer}     = require("../server/server");
+const knex               = require('knex');
+let server = new DashieServer();
+let dbProvider = new ContextProvider("db");
 dbProvider.registerDB(knex({
     client: 'mysql2',
     connection: {
@@ -106,7 +106,7 @@ dbProvider.registerDB(knex({
 
 class LoginApp{
     @server.addRoute("POST", "/login")
-    @dbProvider.withDb("knex_users")
+    @dbProvider.using("knex_users")
     static async helloWorld(env, req, res){
         const {username, password} = req.body;
         const {db} = env;
@@ -128,11 +128,11 @@ server.listen(1337);
 #### Default Contexts
 
 ```js
-const {MyServer}  = require("../server/server");
-const {DBHandler} = require("./server/dbHandler");
-const knex        = require('knex');
-let server = new MyServer();
-let dbProvider = new DBHandler();
+const {DashieServer}    = require("../server/server");
+const {ContextProvider} = require("../server/contextProvider");
+const knex              = require('knex');
+let server = new DashieServer();
+let dbProvider = new ContextProvider("db");
 dbProvider.registerDB(knex({
     client: 'mysql2',
     connection: {
@@ -145,7 +145,7 @@ dbProvider.registerDB(knex({
 
 class LoginApp{
     @server.addRoute("POST", "/login")
-    @dbProvider.withDb()
+    @dbProvider.using()
     static async helloWorld(env, req, res){
         const {username, password} = req.body;
         const {db} = env;

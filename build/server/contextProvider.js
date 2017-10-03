@@ -8,7 +8,7 @@ class ContextProvider {
         };
         this.type = type;
     }
-    withDb(connectionName) {
+    using(connectionName) {
         const myConnection = connectionName || "default";
         return (target, key, descriptor) => {
             return {

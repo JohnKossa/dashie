@@ -7,7 +7,7 @@ class ContextProvider{
         "default": null
     };
 
-    public withDb(connectionName?: string){
+    public using(connectionName?: string){
         const myConnection = connectionName || "default";
         return (target: any, key: string, descriptor: TypedPropertyDescriptor<any>)=>{
             return {
