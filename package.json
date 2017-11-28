@@ -1,6 +1,6 @@
 {
   "name": "dashie",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A minimalist web server",
   "main": "build/main.js",
   "scripts": {
