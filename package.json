@@ -18,7 +18,8 @@
   "devDependencies": {
     "@types/node": "^8.0.31",
     "ts-node": "^3.3.0",
-    "typescript": "^2.5.2"
+    "tsc": "^1.20150623.0",
+    "typescript": "^2.6.2"
   },
   "dependencies": {
     "fs": "0.0.1-security",
