@@ -1,0 +1,11 @@
+# Ignore Everything
+*
+
+# Except for the following:
+
+!.gitignore
+!.npmignore
+!LICENSE
+!package.json
+!package-lock.json
+!/build/
