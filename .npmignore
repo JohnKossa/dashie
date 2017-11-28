@@ -8,4 +8,6 @@
 !LICENSE
 !package.json
 !package-lock.json
-!/build/
+!/build/*
+!/build/server/
+!/build/server/*
