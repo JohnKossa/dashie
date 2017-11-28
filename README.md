@@ -21,7 +21,7 @@ Dashie requires node v7.0.0 or higher and async function support.
 Dashie currently only functions through the use of TypeScript compilation steps, but we plan to remove that dependency the second decorators are officially added to the ECMA spec.
 
 ```
-No installation available yet. Stay tuned for details!
+npm install dashie --save
 ```
 ## Hello World
 
