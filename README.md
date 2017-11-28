@@ -1,4 +1,4 @@
-# dashie
+# Dashie
 A very minimalistic but easy to use web framework for node.js.
  
 What do we mean by minimalistic? People do tend to toss around that term lightly.
@@ -44,6 +44,8 @@ server.listen(1337);
 
 ### Dynamic Routing
 
+Simplify your code with URL pattern matching.
+
 ```js
 const {DashieServer} = require("dashie");
 let server = new DashieServer();
@@ -61,6 +63,8 @@ server.listen(1337);
 ```
 
 ### Post Body Parsing
+
+Post body sent to you in JSON or a multipart form? We've got the parsing covered.
 
 ```js
 const {DashieServer} = require("dashie");
@@ -87,6 +91,8 @@ server.listen(1337);
 ### Database Context Providing
 
 #### Named Contexts
+
+Grab things like database connections explicitly and only when you need them with the ContextProvider object.
 
 ```js
 const {DashieServer, ContextProvider} = require("dashie");
@@ -126,6 +132,8 @@ server.listen(1337);
 
 #### Default Contexts
 
+Only have 1 connection and just don't feel like coming up with a name? Just leave it blank. We'll take care of it. 
+
 ```js
 const {DashieServer, ContextProvider} = require("dashie");
 const knex              = require('knex');
@@ -161,3 +169,32 @@ class LoginApp{
 new LoginApp();
 server.listen(1337);
 ```
+
+## Roadmap
+
+Dashie is a work in progress with much more to come. Here's a few things to look forward to:
+
+1. Benchmarks
+
+What's the use of being so fast if nobody knows it? Dashie currently clocks in slower than vanilla node (obviously) but higher than Koa.js in terms of raw throughput. We'll be adding official benchmarks and posting the source for you to inspect for youself.
+
+2. Even faster routing
+
+Dashie does routing incredibly quickly, keeping up with the best in the business, but we have a few ideas that could nudge that speed even higher. After all, in web servers, speed is critical.
+
+3. Pre and Post processing middleware
+
+We'll be adding a decorator method to allow conditional attaching of middleware to only the routes you want. Gzip compression can really boost some endpoints, but it's not really something you want running everywhere.
+
+4. Static file routes
+
+Sadly, serving files isn't just a single line for dashie at the moment. (It's closer to 8 with proper braces and line breaks.) This is definitely something worth doing, given how common a need this is.
+
+5. Non-typescript route and context declarations
+
+I've never been a huge fan of typescript. It's a less and less popular opinion to have nowadays, but I love me some vanilla javascript. This task would be to add a way to add routes for those of us who would rather not add typescript into our projects. If the ECMA standards committee decides to add decorators to the ECMA standard, this will likely become a moot point.
+
+6. Go reeeealy fast
+
+There are a few ways we could probably boost dashie's throughput above that of vanilla node, but it would complicate the deployment quite a bit. Choices, choices, choices.
+
