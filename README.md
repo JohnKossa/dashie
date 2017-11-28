@@ -26,7 +26,7 @@ npm install dashie --save
 ## Hello World
 
 ```js
-const {DashieServer} = require("../server/server");
+const {DashieServer} = require("dashie");
 let server = new DashieServer();
 class HelloWorldApp{
     @server.addRoute("GET", "/hello_world")
@@ -45,7 +45,7 @@ server.listen(1337);
 ### Dynamic Routing
 
 ```js
-const {DashieServer} = require("../server/server");
+const {DashieServer} = require("dashie");
 let server = new DashieServer();
 
 class HelloSomeoneApp{
@@ -63,7 +63,7 @@ server.listen(1337);
 ### Post Body Parsing
 
 ```js
-const {DashieServer} = require("../server/server");
+const {DashieServer} = require("dashie");
 let server = new DashieServer();
 
 class LoginApp{
@@ -89,8 +89,7 @@ server.listen(1337);
 #### Named Contexts
 
 ```js
-const {ContextProvider}  = require("../server/contextProvider");
-const {DashieServer}     = require("../server/server");
+const {DashieServer, ContextProvider} = require("dashie");
 const knex               = require('knex');
 let server = new DashieServer();
 let dbProvider = new ContextProvider("db");
@@ -128,8 +127,7 @@ server.listen(1337);
 #### Default Contexts
 
 ```js
-const {DashieServer}    = require("../server/server");
-const {ContextProvider} = require("../server/contextProvider");
+const {DashieServer, ContextProvider} = require("dashie");
 const knex              = require('knex');
 let server = new DashieServer();
 let dbProvider = new ContextProvider("db");
