@@ -174,6 +174,8 @@ server.listen(1337);
 
 In preliminary performance tests, Dashie clocks in at 86.4% of Vanilla, compared to 81.1% for Koa and 56.1% for Express. Details about how the benchmark was conducted are posted [here](https://github.com/JohnKossa/dashie-bench).
 
+![](https://github.com/JohnKossa/dashie/blob/master/framework%20throughput%20chart.png "Throughput Comparison")
+
 ## Roadmap
 
 Dashie is a work in progress with much more to come. Here's a few things to look forward to:
