@@ -180,9 +180,9 @@ In preliminary performance tests, Dashie clocks in at 86.4% of Vanilla, compared
 
 Dashie is a work in progress with much more to come. Here's a few things to look forward to:
 
-1. Benchmarks
+1. ~~Benchmarks~~
 
-What's the use of being so fast if nobody knows it? Dashie currently clocks in slower than vanilla node (obviously) but higher than Koa.js in terms of raw throughput. We'll be adding official benchmarks and posting the source for you to inspect for youself.
+~~What's the use of being so fast if nobody knows it? Dashie currently clocks in slower than vanilla node (obviously) but higher than Koa.js in terms of raw throughput. We'll be adding official benchmarks and posting the source for you to inspect for youself.~~
 
 2. Even faster routing
 

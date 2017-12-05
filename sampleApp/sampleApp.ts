@@ -3,8 +3,10 @@ const path               = require('path');
 const url                = require('url');
 const {promisify}        = require('util');
 
-const {MyServer}         = require("../server/server");
-const {ContextProvider}  = require("../server/contextProvider");
+const {
+    DashieServer,
+    ContextProvider
+}                        = require("../main");
 
 const configs = {
     dbhost: process.env.DB_HOST,
@@ -13,7 +15,7 @@ const configs = {
     redishost: process.env.REDIS_HOST
 };
 
-let server = new MyServer(); //instantiate server
+let server = new DashieServer(); //instantiate server
 let dbHandler = new ContextProvider("db"); //instantiate db connector
 let redisHandler = new ContextProvider("redis"); //instantiate redis connector
 
