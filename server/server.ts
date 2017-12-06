@@ -3,7 +3,7 @@ const querystring = require('querystring');
 
 class DashieServer{
     private httpServer = null;
-    public myRoutes = [];
+    public myRoutes = {};
 
     constructor(){
         this.httpServer = http.createServer(async (req, res)=>{
@@ -50,20 +50,36 @@ class DashieServer{
     }
 
     public registerRoute(verb: string, route: string, func: Function): void{
-        console.info("Registed route "+ verb+ " "+route);
         const matchRegex:RegExp  = new RegExp("^"+route.replace(/:[a-zA-Z][a-zA-Z0-9\.]*/g, "[a-zA-Z][a-zA-Z0-9\\.]*")+"(?:[?].*)?$");
         const replaceRegex:RegExp = new RegExp("^"+route.replace(/:[a-zA-Z][a-zA-Z0-9\.]*/g, "([a-zA-Z][a-zA-Z0-9\\.]*)")+"(?:[?].*)?$");
         const matchIndices:string[] = (route.match(/:[a-zA-Z][a-zA-Z0-9\.]*/g)||[]).map((el)=>el.slice(1));
-        this.myRoutes.push({verb, route, matchRegex, regexes:{regex: replaceRegex, indices: matchIndices}, func});
+        const entry = {verb, route, matchRegex, regexes:{regex: replaceRegex, indices: matchIndices}, func};
+        console.info("Registed route "+ verb+ " "+route);
+        if(!this.myRoutes[verb]){
+            this.myRoutes[verb] = {
+                regex: new RegExp("("+matchRegex.source+")"),
+                count: 1,
+                entries: [entry]
+            }
+        }else{
+            this.myRoutes[verb].regex = new RegExp(this.myRoutes[verb].regex.source+"|("+matchRegex.source+")");
+            this.myRoutes[verb].count++;
+            this.myRoutes[verb].entries.push(entry);
+        }
     }
 
     private findHandler(verb: string, route: string){
-        const matchedHandler = this.myRoutes.find((handler)=>handler.verb === verb && handler.matchRegex.test(route));
-        if(!matchedHandler){
-            return null;
-        }else{
-            return matchedHandler;
+        if(this.myRoutes[verb]) {
+            const res = this.myRoutes[verb].regex.exec(route);
+            if (res != null) {
+                for (let i = 1; i <= this.myRoutes[verb].count; i++) {
+                    if (res[i] !== undefined) {
+                        return this.myRoutes[verb].entries[i - 1];
+                    }
+                }
+            }
         }
+        return null;
     }
 
     private getPostBody (request):Promise<any>{

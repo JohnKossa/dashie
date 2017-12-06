@@ -5,7 +5,7 @@ const querystring = require('querystring');
 class DashieServer {
     constructor() {
         this.httpServer = null;
-        this.myRoutes = [];
+        this.myRoutes = {};
         this.httpServer = http.createServer(async (req, res) => {
             const matchedHandler = this.findHandler(req.method, req.url);
             if (matchedHandler != null) {
@@ -52,20 +52,36 @@ class DashieServer {
         });
     }
     registerRoute(verb, route, func) {
-        console.info("Registed route " + verb + " " + route);
         const matchRegex = new RegExp("^" + route.replace(/:[a-zA-Z][a-zA-Z0-9\.]*/g, "[a-zA-Z][a-zA-Z0-9\\.]*") + "(?:[?].*)?$");
         const replaceRegex = new RegExp("^" + route.replace(/:[a-zA-Z][a-zA-Z0-9\.]*/g, "([a-zA-Z][a-zA-Z0-9\\.]*)") + "(?:[?].*)?$");
         const matchIndices = (route.match(/:[a-zA-Z][a-zA-Z0-9\.]*/g) || []).map((el) => el.slice(1));
-        this.myRoutes.push({ verb, route, matchRegex, regexes: { regex: replaceRegex, indices: matchIndices }, func });
-    }
-    findHandler(verb, route) {
-        const matchedHandler = this.myRoutes.find((handler) => handler.verb === verb && handler.matchRegex.test(route));
-        if (!matchedHandler) {
-            return null;
+        const entry = { verb, route, matchRegex, regexes: { regex: replaceRegex, indices: matchIndices }, func };
+        console.info("Registed route " + verb + " " + route);
+        if (!this.myRoutes[verb]) {
+            this.myRoutes[verb] = {
+                regex: new RegExp("(" + matchRegex.source + ")"),
+                count: 1,
+                entries: [entry]
+            };
         }
         else {
-            return matchedHandler;
+            this.myRoutes[verb].regex = new RegExp(this.myRoutes[verb].regex.source + "|(" + matchRegex.source + ")");
+            this.myRoutes[verb].count++;
+            this.myRoutes[verb].entries.push(entry);
         }
+    }
+    findHandler(verb, route) {
+        if (this.myRoutes[verb]) {
+            const res = this.myRoutes[verb].regex.exec(route);
+            if (res != null) {
+                for (let i = 1; i <= this.myRoutes[verb].count; i++) {
+                    if (res[i] !== undefined) {
+                        return this.myRoutes[verb].entries[i - 1];
+                    }
+                }
+            }
+        }
+        return null;
     }
     getPostBody(request) {
         return new Promise((resolve, reject) => {
