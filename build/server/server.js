@@ -59,7 +59,7 @@ class DashieServer {
         console.info("Registed route " + verb + " " + route);
         if (!this.myRoutes[verb]) {
             this.myRoutes[verb] = {
-                re: new RegExp("(" + matchRegex.source + ")"),
+                regex: new RegExp("(" + matchRegex.source + ")"),
                 count: 1,
                 entries: [entry]
             };
