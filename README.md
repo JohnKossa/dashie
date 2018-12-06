@@ -184,15 +184,17 @@ Dashie is a work in progress with much more to come. Here's a few things to look
 
 ~~What's the use of being so fast if nobody knows it? Dashie currently clocks in slower than vanilla node (obviously) but higher than Koa.js in terms of raw throughput. We'll be adding official benchmarks and posting the source for you to inspect for youself.~~
 
-2. Even faster routing
+2. ~~Even faster routing~~
 
 ~~Dashie does routing incredibly quickly, keeping up with the best in the business, but we have a few optimization tweaks that could nudge that speed even higher. After all, in web servers, speed is critical.~~
 
 This is now done and in place. The change is a small percentage speed increase over the base, but we've cut the gap with a vanilla server by about 50%, which is significant enough in my book. The benchmarks haven't been updated to reflect this change yet, but that's coming.
 
-3. Pre and Post processing middleware
+3. ~~Pre and Post processing middleware~~
 
-We'll be adding a decorator method to allow conditional attaching of middleware to only the routes you want. Gzip compression can really boost some endpoints, but it's not really something you want running everywhere.
+~~We'll be adding a decorator method to allow conditional attaching of middleware to only the routes you want. Gzip compression can really boost some endpoints, but it's not really something you want running everywhere.~~
+
+A first verstion of this is in place. We might make improvements to it later, but it appears to work for now.
 
 4. Static file routes
 
@@ -204,7 +206,7 @@ I've never been a huge fan of typescript. It's a less and less popular opinion t
 
 We're currently leaning towards authoring a swagger plugin library to leverage swagger's already potent config system with Dashie's speed.
 
-~~6. Go reeeealy fast~~
+6. ~~Go reeeealy fast~~
 
 ~~The micro web sockets library (uws) appears to afford a significant performance increase over HTTP 1.1 and with pipelineing. The node networking community has discussed it at some length and decided that keep-alives with connection pooling should be just as good, but the numbers seem to point in uws's favor. This could push dashie's throughput to above that of vanilla node, but it would complicate the deployment quite a bit and seriously slow down HTTP 1.0 traffic. Choices, choices, choices.~~
 
