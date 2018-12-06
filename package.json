@@ -1,10 +1,10 @@
 {
   "name": "dashie",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A minimalist web server",
   "main": "build/main.js",
   "scripts": {
-    "start": "node build/sampleApp.js",
+    "start": "node build/sampleApp/sampleApp.js",
     "build:compile": "./node_modules/.bin/tsc",
     "build:prepSample": "npm run build:compile && cp -R sampleApp/static build/sampleApp/",
     "test": "echo \"Error: no test specified\" && exit 1"

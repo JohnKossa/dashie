@@ -33,6 +33,14 @@ class DashieServer {
                     }
                 }
                 try {
+                    if (matchedFunction.mw) {
+                        for (let i = 0; i < matchedFunction.mw.length && !res.finished; i++) {
+                            matchedFunction.mw[i].call(null, req, res);
+                        }
+                        if (res.finished) {
+                            return;
+                        }
+                    }
                     return matchedFunction({}, req, res);
                 }
                 catch (e) {

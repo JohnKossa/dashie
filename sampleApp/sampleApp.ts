@@ -5,7 +5,8 @@ const {promisify}        = require('util');
 
 const {
     DashieServer,
-    ContextProvider
+    ContextProvider,
+    mw
 }                        = require("../main");
 
 const configs = {
@@ -49,6 +50,24 @@ class sampleApp {
         res.write(JSON.stringify(toSend));
         res.end();
     }
+
+    @server.addRoute("GET", "/middleware_test1")
+    @mw((req, res)=>{res.write("hello"); res.end()})
+    static async getTimeSeries3(env, req, res){
+        const parsedQuery = url.parse(req.url, true).query;
+        const count = parsedQuery["count"];
+        let toSend = [];
+        for(let i = 0; i< count;i++){
+            toSend.push({
+                id: i,
+                timestamp: new Date(Date.now()+(i*5*60*1000)).toISOString(),
+                x: i*i/Math.PI
+            });
+        }
+        res.write(JSON.stringify(toSend));
+        res.end();
+    }
+
 
     @server.addRoute("GET", "/time_series2")
     static async getTimeSeries2(env, req, res){

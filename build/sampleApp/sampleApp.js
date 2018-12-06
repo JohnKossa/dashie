@@ -8,7 +8,7 @@ const fs = require('fs');
 const path = require('path');
 const url = require('url');
 const { promisify } = require('util');
-const { DashieServer, ContextProvider } = require("../main");
+const { DashieServer, ContextProvider, mw } = require("../main");
 const configs = {
     dbhost: process.env.DB_HOST,
     dbuser: process.env.DB_USER,
@@ -32,6 +32,20 @@ class sampleApp {
         }
     }
     static async getTimeSeries(env, req, res) {
+        const parsedQuery = url.parse(req.url, true).query;
+        const count = parsedQuery["count"];
+        let toSend = [];
+        for (let i = 0; i < count; i++) {
+            toSend.push({
+                id: i,
+                timestamp: new Date(Date.now() + (i * 5 * 60 * 1000)).toISOString(),
+                x: i * i / Math.PI
+            });
+        }
+        res.write(JSON.stringify(toSend));
+        res.end();
+    }
+    static async getTimeSeries3(env, req, res) {
         const parsedQuery = url.parse(req.url, true).query;
         const count = parsedQuery["count"];
         let toSend = [];
@@ -82,6 +96,10 @@ __decorate([
 __decorate([
     server.addRoute("GET", "/time_series")
 ], sampleApp, "getTimeSeries", null);
+__decorate([
+    server.addRoute("GET", "/middleware_test1"),
+    mw((req, res) => { res.write("hello"); res.end(); })
+], sampleApp, "getTimeSeries3", null);
 __decorate([
     server.addRoute("GET", "/time_series2")
 ], sampleApp, "getTimeSeries2", null);
